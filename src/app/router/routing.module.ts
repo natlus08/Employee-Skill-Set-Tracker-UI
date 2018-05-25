@@ -10,6 +10,7 @@ import { SkillComponent } from '../skill/skill.component'
 const routes: Routes = [
   { path: 'Dashboard', component: DashboardComponent },
   { path: 'Edit/:index', component: EditEmployeeComponent },
+  { path: 'View/:index', component: EditEmployeeComponent },
   { path: 'Add', component: AddEmployeeComponent },
   { path: 'Skill', component: SkillComponent },
   { path: '**', redirectTo: 'Dashboard'}

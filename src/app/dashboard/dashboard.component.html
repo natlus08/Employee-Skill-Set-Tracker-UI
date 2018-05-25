@@ -3,68 +3,88 @@
     <main class="col-md-12">
       <h1 class="text-center">Employee Skill Set Tracker - Dashboard</h1>
       <div class="row">
-        <div class="leftcolumn">
-          <div class="col-md-12 grey-fill skillset-bar">
-            Skill set graph goes here
+        <div class="col-md-10 data-block">
+          <div class="skillset-bar row">
+            graph goes here
           </div>
-          <div class="row">
-            <div class="col-lg-1 capsule grey-fill">
-              B1
+          <div class="capsule row data">
+            <div class="col text-center">
+              <strong>{{associates.length}}</strong><br>
+              Regsitered Candidates
             </div>
-            <div class="col-md-1 capsule grey-fill">
-              B1
+            <div class="col">
+              <strong>{{groupByGender}}</strong><br>
             </div>
-            <div class="col-md-1 capsule grey-fill">
-              B1
+            <div class="col">
+              B3
             </div>
-            <div class="col-md-1 capsule grey-fill">
-              B1
+            <div class="col">
+              B4
             </div>
-            <div class="col-md-1 capsule grey-fill">
-              B1
+            <div class="col">
+              B5
             </div>
-            <div class="col-md-1 capsule grey-fill">
-              B1
+            <div class="col">
+              B6
             </div>
-            <div class="col-md-1 capsule grey-fill">
-              B1
+            <div class="col">
+              B7
             </div>
           </div>
         </div>
-        <div class="rightcolumn">
-          <div class="col-md-2">
-            <div class="capsule grey-fill">
-              Level-3
-            </div>
-            <div class="capsule grey-fill">
-              Level-2
-            </div>
-            <div class="capsule grey-fill">
-              Level-1
-            </div>
+        <div class="col data-block">
+          <div class="capsule">
+            Level-3
+          </div>
+          <div class="capsule">
+            Level-2
+          </div>
+          <div class="capsule">
+            Level-1
           </div>
         </div>
       </div>
 
-      <h2>Section title</h2>
       <div class="table-responsive">
         <table class="table table-striped">
           <thead>
           <tr>
-            <th>#</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
-            <th>Header</th>
+            <th>Pic</th>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Associate ID</th>
+            <th>E-mail</th>
+            <th>Cell Phone</th>
+            <th>Strong Skills</th>
+            <th></th>
+          </tr>
+          <tr>
+            <th></th>
+            <th></th>
+            <th><input type="text" [(ngModel)]="searchName" name="searchText" placeholder="Search By Name"></th>
+            <th><input type="text" [(ngModel)]="searchId" name="searchText" placeholder="Search By Id"></th>
+            <th><input type="text" [(ngModel)]="searchEmail" name="searchText" placeholder="Search By E-mail"></th>
+            <th><input type="text" [(ngModel)]="searchCell" name="searchText" placeholder="Search By Cell"></th>
+            <th><input type="text" [(ngModel)]="searchSkill" name="searchText" placeholder="Search By Skill"></th>
+            <th><button class="btn-success" [routerLink] = "['/Add']">Add new Associate</button></th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1,001</td>
-            <td>Lorem</td>
-            <td>ipsum</td>
-            <td>dolor</td>
-            <td>sit</td>
+          <tr *ngFor="let associate of associates">
+            <td><img src=""></td>
+            <td>{{associate.status}}</td>
+            <td>{{associate.name}}</td>
+            <td>{{associate.id}}</td>
+            <td>{{associate.email}}</td>
+            <td>{{associate.mobile}}</td>
+            <td>
+              <span *ngFor="let associateSkill of associate.skills">{{associateSkill.level > 10 ? associateSkill.skill.name + ', ':''}}</span>
+            </td>
+            <td>
+              <button class="btn-warning" [routerLink] = "['/Edit',associate.id]">Edit</button>
+              <button class="btn-danger">Delete</button>
+              <button class="btn-info" [routerLink] = "['/View',associate.id]">View</button>
+            </td>
           </tr>
           </tbody>
         </table>

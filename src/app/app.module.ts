@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component'
 import { SkillComponent } from './skill/skill.component'
 import { routing } from './router/routing.module';
 //import services
+import { AssociateService } from './services/associate.service'
 //import pipes
 
 @NgModule({
@@ -29,7 +30,7 @@ import { routing } from './router/routing.module';
     HttpClientModule,
     routing
   ],
-  providers: [],
+  providers: [AssociateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,5 @@
-.grey-fill {
-  background-color: grey;
-  margin-right: 1px;
-  margin-top: 1px;
+.data-block {
+  height: 225px;
 }
 
 .skillset-bar {
@@ -12,15 +10,7 @@
   height: 75px;
 }
 
-/* Left column */
-.leftcolumn {
-  float: left;
-  width: 90%;
-}
-
-/* Right column */
-.rightcolumn {
-  float: right;
-  width: 10%;
-  padding-left: 5px;
+.skillset-bar, .data > div, .data-block > div {
+  border: solid;
+  border-color: black;
 }
