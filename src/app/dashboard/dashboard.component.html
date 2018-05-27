@@ -1,46 +1,62 @@
 <div class="container-fluid">
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
   <div class="row">
     <main class="col-md-12">
       <h1 class="text-center">Employee Skill Set Tracker - Dashboard</h1>
       <div class="row">
         <div class="col-md-10 data-block">
           <div class="skillset-bar row">
-            graph goes here
+              <div class="" style="width: 15%"></div>
+              <div class="bg-success" style="width: 30%"></div>
+              <div class="bg-info" style="width: 20%"></div>
           </div>
-          <div class="capsule row data">
-            <div class="col text-center">
-              <strong>{{associates.length}}</strong><br>
-              Regsitered Candidates
+          <div class="capsule row data text-center">
+            <div class="col ">
+              <strong>{{dashboard.associates}}</strong><br>
+              Regsitered Associates
             </div>
             <div class="col">
-              <strong>{{groupByGender}}</strong><br>
+              <strong>{{dashboard.maleAssociates}}%</strong><br>
+              Male <br>Associates
             </div>
             <div class="col">
-              B3
+              <strong>{{dashboard.femaleAssociates}}%</strong><br>
+              Female Associates
             </div>
             <div class="col">
-              B4
+              <strong>{{dashboard.freshers}}%</strong><br>
+              Freshers
             </div>
             <div class="col">
-              B5
+              <strong>{{dashboard.rated}}</strong><br>
+              Associates <br>Rated
             </div>
             <div class="col">
-              B6
+              <strong>{{dashboard.maleRatedAssociates}}%</strong><br>
+              Male Rated Associates
             </div>
             <div class="col">
-              B7
+              <strong>{{dashboard.femaleRatedAssociates}}%</strong><br>
+              Female Rated Associates
             </div>
           </div>
         </div>
-        <div class="col data-block">
+        <div class="col data-block text-center">
           <div class="capsule">
-            Level-3
+            <strong>{{dashboard.level3}}%</strong><br>
+            Level-3 Associates
           </div>
           <div class="capsule">
-            Level-2
+            <strong>{{dashboard.level2}}%</strong><br>
+            Level-2 Associates
           </div>
           <div class="capsule">
-            Level-1
+            <strong>{{dashboard.level1}}%</strong><br>
+            Level-1 Associates
           </div>
         </div>
       </div>
@@ -59,20 +75,20 @@
             <th></th>
           </tr>
           <tr>
-            <th></th>
-            <th></th>
-            <th><input type="text" [(ngModel)]="searchName" name="searchText" placeholder="Search By Name"></th>
-            <th><input type="text" [(ngModel)]="searchId" name="searchText" placeholder="Search By Id"></th>
-            <th><input type="text" [(ngModel)]="searchEmail" name="searchText" placeholder="Search By E-mail"></th>
-            <th><input type="text" [(ngModel)]="searchCell" name="searchText" placeholder="Search By Cell"></th>
-            <th><input type="text" [(ngModel)]="searchSkill" name="searchText" placeholder="Search By Skill"></th>
+            <th colspan="2"><button class="btn-primary" (click)="clearFilters()">Clear Filters</button></th>
+            <th><input type="text" [(ngModel)]="searchName" name="searchName" placeholder="Search By Name"></th>
+            <th><input type="text" [(ngModel)]="searchId" name="searchId" placeholder="Search By Id"></th>
+            <th><input type="text" [(ngModel)]="searchEmail" name="searchEmail" placeholder="Search By E-mail"></th>
+            <th><input type="text" [(ngModel)]="searchCell" name="searchCell" placeholder="Search By Cell"></th>
+            <th><input type="text" [(ngModel)]="searchSkill" name="searchSkill" placeholder="Search By a skill"></th>
             <th><button class="btn-success" [routerLink] = "['/Add']">Add new Associate</button></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let associate of associates">
+          <tr *ngFor="let associate of associates | namefilter : searchName | idfilter : searchId | emailfilter : searchEmail
+          | mobilefilter : searchCell | skillfilter : searchSkill">
             <td><img src=""></td>
-            <td>{{associate.status}}</td>
+            <td><div [ngClass]="associate.status" class="status"></div></td>
             <td>{{associate.name}}</td>
             <td>{{associate.id}}</td>
             <td>{{associate.email}}</td>
@@ -82,7 +98,7 @@
             </td>
             <td>
               <button class="btn-warning" [routerLink] = "['/Edit',associate.id]">Edit</button>
-              <button class="btn-danger">Delete</button>
+              <button class="btn-danger" (click)="delete(associate.id)">Delete</button>
               <button class="btn-info" [routerLink] = "['/View',associate.id]">View</button>
             </td>
           </tr>

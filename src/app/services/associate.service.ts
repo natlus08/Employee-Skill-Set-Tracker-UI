@@ -23,10 +23,10 @@ export class AssociateService {
   editCategory(category:Category):Observable<Category>{
     let body = JSON.stringify(category);
     return this.http.put<Category>(Constants.API_ENDPOINT+'category', category, Constants.HTTP_OPTIONS);
-  }
-
-  deleteCategory(id:number):Observable<any>{
-    return this.http.delete(Constants.API_ENDPOINT+'category/'+id, Constants.HTTP_OPTIONS);
   }*/
+
+  deleteAssociate(id:number):Observable<any>{
+    return this.http.delete(Constants.ASSOCIATE_API_ENDPOINT+'associate/'+id, Constants.HTTP_OPTIONS);
+  }
 
 }

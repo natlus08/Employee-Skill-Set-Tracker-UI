@@ -12,7 +12,13 @@ import { SkillComponent } from './skill/skill.component'
 import { routing } from './router/routing.module';
 //import services
 import { AssociateService } from './services/associate.service'
+import { CommonService } from './services/common.service'
 //import pipes
+import { NameFilter } from './pipes/namefilter.pipe';
+import { IdFilter } from './pipes/idfilter.pipe';
+import { EmailFilter } from './pipes/emailfilter.pipe';
+import { MobileFilter } from './pipes/mobilefilter.pipe';
+import { SkillFilter } from './pipes/skillfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +26,12 @@ import { AssociateService } from './services/associate.service'
     AddEmployeeComponent,
     EditEmployeeComponent,
     DashboardComponent,
-    SkillComponent
+    SkillComponent,
+    NameFilter,
+    IdFilter,
+    EmailFilter,
+    MobileFilter,
+    SkillFilter
   ],
   imports: [
     BrowserModule,
@@ -30,7 +41,7 @@ import { AssociateService } from './services/associate.service'
     HttpClientModule,
     routing
   ],
-  providers: [AssociateService],
+  providers: [AssociateService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
