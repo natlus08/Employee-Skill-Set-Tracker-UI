@@ -1,13 +1,13 @@
 .data-block {
-  height: 225px;
+  height: 240px;
 }
 
 .skillset-bar {
-  height: 150px;
+  height: 160px;
 }
 
 .capsule {
-  height: 75px;
+  height: 80px;
 }
 
 .skillset-bar, .data > div, .data-block > div {

@@ -21,7 +21,8 @@ export class DashboardComponent implements OnInit {
   searchEmail: string = '';
   searchCell: string = '';
   searchSkill: string = '';
-  groupBySkill: any[] = [];
+  groupBySkill: any = {};
+  skillMapData: any = [];
 
   constructor(private _associateService: AssociateService, private _commonService: CommonService) { }
 
@@ -48,6 +49,7 @@ export class DashboardComponent implements OnInit {
     var ratedFemale = 0;
     var level2 = 0;
     var level3 = 0;
+    var totalSkills = 0;
     var total = associates.length;
     associates.forEach(associate => {
       if (associate.gender === 'M') {
@@ -74,7 +76,8 @@ export class DashboardComponent implements OnInit {
           ratedFemale++;
         }
       }
-      associate.skills.forEach(function (associateSkill) {
+      associate.skills.forEach(associateSkill => {
+        totalSkills++;
         this.groupBySkill[associateSkill.skill.name] = this.groupBySkill[associateSkill.skill.name] || [];
         this.groupBySkill[associateSkill.skill.name].push({ associate });
       });
@@ -83,10 +86,23 @@ export class DashboardComponent implements OnInit {
       this.getPercentage(total,freshers),rated,this.getPercentage(rated,ratedMale),this.getPercentage(rated,ratedFemale),
       this.getPercentage(total,freshers),this.getPercentage(total,level2),this.getPercentage(total,level3));
 
-    console.log(this.groupBySkill);
+    Object.keys(this.groupBySkill).forEach((key) => {
+      this.skillMapData.push({
+        skill: key,
+        percentage: this.getPercentage(totalSkills,this.groupBySkill[key].length)+'%',
+        colour: this.getRandomColor()
+      });
+    });
   }
 
-
+  getRandomColor() : any {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
   getPercentage(base:number, value:number): number {
     return ((Math.round((value/base)*100)));
