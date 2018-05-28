@@ -63,16 +63,41 @@
         </div>
         <hr>
         <h3>Skills</h3>
+        <div class="form-group row">
+          <div class="form-group col-4" *ngFor="let associateSkill of associateSkills">
+            <div class="row">
+              <label for="skill-{{associateSkill.skill.id}}" class="col-sm-3 col-form-label"><strong>{{associateSkill.skill.name | uppercase}}</strong></label>
+              <div class="col-sm-9">
+                <input type="number" min="0" max="20" name="skill-{{associateSkill.skill.id}}" [(ngModel)]="associateSkill.level" class="form-control" id="skill-{{associateSkill.skill.id}}">
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group row">
+          <div class="form-group col-6">
+            <div class="row">
+              <label for="strength" class="col-sm-2 col-form-label"><strong>Strength</strong></label>
+              <div class="col-sm-10">
+                <input type="text" name="strength" placeholder="Enter Strength" [(ngModel)]="associate.strength" class="form-control" id="strength">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-6">
+            <div class="row">
+              <label for="strength" class="col-sm-2 col-form-label"><strong>Weakness</strong></label>
+              <div class="col-sm-10">
+                <input type="text" name="weakness" placeholder="Enter Weakness" [(ngModel)]="associate.weakness" class="form-control" id="weakness">
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
         <div class="row">
-          <div class="form-group col-4" *ngFor="let skill of skills">
-            <div class="col-1">
-              <label for="skill-{{skill.id}}" class="col-sm-1">{{skill.name}}</label>
-            </div>
-            <div class="col-4">
-              <span>0</span>
-              <input type="range" min="0" max="20" value="5" class="slider" id="skill-{{skill.id}}">
-              <span>20</span>
-            </div>
+          <div class="floatRight">
+            <button class="btn btn-primary btn-sm">Save</button>
+            <button class="btn btn-warning btn-sm">Reset</button>
+            <button class="btn btn-warning btn-sm">Cancel</button>
           </div>
         </div>
       </form>

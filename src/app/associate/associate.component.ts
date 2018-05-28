@@ -6,6 +6,7 @@ import { SkillService } from '../services/skill.service';
 
 import { Associate } from '../model/associate';
 import { Skill } from '../model/skill';
+import { AssociateSkill } from '../model/associateskill';
 
 @Component({
   selector: 'app-associate',
@@ -20,6 +21,7 @@ export class AssociateComponent implements OnInit {
   isAdd: boolean = false;
   associate: Associate = new Associate(0,'','','',0,[],'','','','','',[]);
   skills: Skill[] = [];
+  associateSkills: AssociateSkill[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private _associateService: AssociateService,
               private _skillService: SkillService) { }
@@ -46,12 +48,15 @@ export class AssociateComponent implements OnInit {
         this.getAssociate(selectedId);
       }
     }
-    this.getSkills();
+    else {
+      this.getSkills();
+    }
   }
 
   getAssociate(id:number): void {
     this._associateService.getAssociate(id).subscribe((data) => {
         this.associate = data;
+        this.getSkills();
       }
     );
   }
@@ -59,7 +64,23 @@ export class AssociateComponent implements OnInit {
   getSkills(): void {
     this._skillService.getSkills().subscribe((data) => {
         this.skills = data;
+        this.mapAssociateSkillLevel(data);
       }
     );
+  }
+  mapAssociateSkillLevel(skills: Skill[]): void {
+    skills.forEach(skill => {
+      var skillAdded = false;
+      this.associate.skills.forEach(associateSkill => {
+        if(associateSkill.skill.id == skill.id){
+          this.associateSkills.push(associateSkill);
+          skillAdded = true;
+          return;
+        }
+      });
+      if (!skillAdded) {
+        this.associateSkills.push(new AssociateSkill(0,0,skill));
+      }
+    });
   }
 }
