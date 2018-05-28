@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-md-10 data-block">
           <div class="skillset-bar row text-center">
-              <div *ngFor="let data of skillMapData" [ngStyle]="{'width':data.percentage,'background':data.colour}"><span class="align-top">{{data.skill}}</span></div>
+              <div *ngFor="let data of dashboard.skillMapData" [ngStyle]="{'width':data.percentage,'background':data.colour}"><span class="vertical-center">{{data.skill}}</span></div>
           </div>
           <div class="capsule row data text-center">
             <div class="col ">
@@ -68,19 +68,19 @@
             <th></th>
           </tr>
           <tr>
-            <th colspan="2"><button class="btn-primary" (click)="clearFilters()">Clear Filters</button></th>
+            <th colspan="2"><button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button></th>
             <th><input type="text" [(ngModel)]="searchName" name="searchName" placeholder="Search By Name"></th>
             <th><input type="text" [(ngModel)]="searchId" name="searchId" placeholder="Search By Id"></th>
             <th><input type="text" [(ngModel)]="searchEmail" name="searchEmail" placeholder="Search By E-mail"></th>
             <th><input type="text" [(ngModel)]="searchCell" name="searchCell" placeholder="Search By Cell"></th>
             <th><input type="text" [(ngModel)]="searchSkill" name="searchSkill" placeholder="Search By a skill"></th>
-            <th><button class="btn-success" [routerLink] = "['/Add']">Add new Associate</button></th>
+            <th><button class="btn btn-success" [routerLink] = "['/Add']">Add new Associate</button></th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let associate of associates | namefilter : searchName | idfilter : searchId | emailfilter : searchEmail
           | mobilefilter : searchCell | skillfilter : searchSkill">
-            <td><img src=""></td>
+            <td><img src="assets/Penguins.jpg" class="card-img"></td>
             <td><div [ngClass]="associate.status" class="status"></div></td>
             <td>{{associate.name}}</td>
             <td>{{associate.id}}</td>
@@ -89,7 +89,7 @@
             <td>
               <span *ngFor="let associateSkill of associate.skills">{{associateSkill.level > 10 ? associateSkill.skill.name + ', ':''}}</span>
             </td>
-            <td>
+            <td style="width: 15%">
               <button class="btn-warning" [routerLink] = "['/Edit',associate.id]">Edit</button>
               <button class="btn-danger" (click)="delete(associate.id)">Delete</button>
               <button class="btn-info" [routerLink] = "['/View',associate.id]">View</button>

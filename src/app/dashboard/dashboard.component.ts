@@ -15,14 +15,12 @@ import { Dashboard } from '../model/dashboard';
 export class DashboardComponent implements OnInit {
 
   associates:Associate[] = [];
-  dashboard:Dashboard = new Dashboard(0,0,0,0,0,0,0,0,0,0);
+  dashboard:Dashboard = new Dashboard(0,0,0,0,0,0,0,0,0,0,[]);
   searchName: string = '';
   searchId: string = '';
   searchEmail: string = '';
   searchCell: string = '';
   searchSkill: string = '';
-  groupBySkill: any = {};
-  skillMapData: any = [];
 
   constructor(private _associateService: AssociateService, private _commonService: CommonService) { }
 
@@ -51,6 +49,9 @@ export class DashboardComponent implements OnInit {
     var level3 = 0;
     var totalSkills = 0;
     var total = associates.length;
+    var groupBySkill = {};
+    var skillMapData = [];
+
     associates.forEach(associate => {
       if (associate.gender === 'M') {
         maleAssociates++;
@@ -78,21 +79,22 @@ export class DashboardComponent implements OnInit {
       }
       associate.skills.forEach(associateSkill => {
         totalSkills++;
-        this.groupBySkill[associateSkill.skill.name] = this.groupBySkill[associateSkill.skill.name] || [];
-        this.groupBySkill[associateSkill.skill.name].push({ associate });
+        groupBySkill[associateSkill.skill.name] = groupBySkill[associateSkill.skill.name] || [];
+        groupBySkill[associateSkill.skill.name].push({ associate });
       });
     });
-    this.dashboard = new Dashboard(total,this.getPercentage(total,femaleAssociates),this.getPercentage(total,maleAssociates),
-      this.getPercentage(total,freshers),rated,this.getPercentage(rated,ratedMale),this.getPercentage(rated,ratedFemale),
-      this.getPercentage(total,freshers),this.getPercentage(total,level2),this.getPercentage(total,level3));
-
-    Object.keys(this.groupBySkill).forEach((key) => {
-      this.skillMapData.push({
+    Object.keys(groupBySkill).forEach((key) => {
+      skillMapData.push({
         skill: key,
-        percentage: this.getPercentage(totalSkills,this.groupBySkill[key].length)+'%',
+        percentage: this.getGraphPercentage(totalSkills,groupBySkill[key].length)+'%',
         colour: this.getRandomColor()
       });
     });
+
+    this.dashboard = new Dashboard(total,this.getPercentage(total,femaleAssociates),this.getPercentage(total,maleAssociates),
+      this.getPercentage(total,freshers),rated,this.getPercentage(rated,ratedMale),this.getPercentage(rated,ratedFemale),
+      this.getPercentage(total,freshers),this.getPercentage(total,level2),this.getPercentage(total,level3),skillMapData);
+
   }
 
   getRandomColor() : any {
@@ -106,6 +108,10 @@ export class DashboardComponent implements OnInit {
 
   getPercentage(base:number, value:number): number {
     return ((Math.round((value/base)*100)));
+  }
+
+  getGraphPercentage(base:number, value:number): number {
+    return ((value/base)*100);
   }
 
   clearFilters(): void {

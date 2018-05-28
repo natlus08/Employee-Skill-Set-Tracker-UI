@@ -5,13 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 //import components
 import { AppComponent } from './app.component';
-import { AddEmployeeComponent } from './addemployee/addemployee.component'
-import { EditEmployeeComponent } from './editemployee/editemployee.component'
+import { AssociateComponent } from './associate/associate.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { SkillComponent } from './skill/skill.component'
 import { routing } from './router/routing.module';
 //import services
 import { AssociateService } from './services/associate.service'
+import { SkillService } from './services/skill.service'
 import { CommonService } from './services/common.service'
 //import pipes
 import { NameFilter } from './pipes/namefilter.pipe';
@@ -23,8 +23,7 @@ import { SkillFilter } from './pipes/skillfilter.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    AddEmployeeComponent,
-    EditEmployeeComponent,
+    AssociateComponent,
     DashboardComponent,
     SkillComponent,
     NameFilter,
@@ -41,7 +40,7 @@ import { SkillFilter } from './pipes/skillfilter.pipe';
     HttpClientModule,
     routing
   ],
-  providers: [AssociateService, CommonService],
+  providers: [AssociateService, SkillService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

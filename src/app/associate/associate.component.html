@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">
+    <main class="col-md-12">
+      <form>
+        <h3 class="text-center">Skill Set Tracker -
+          <span *ngIf="isAdd">Add new Associate Information</span>
+          <span *ngIf="isView">Associate Information</span>
+          <span *ngIf="isEdit">Edit Associate Information</span>
+        </h3>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" [(ngModel)]="associate.name">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" id="id" name="id" placeholder="Enter Associate ID" [(ngModel)]="associate.id">
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter E-mail" [(ngModel)]="associate.email">
+            </div>
+            <div class="form-group">
+              <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile" [(ngModel)]="associate.mobile">
+            </div>
+          </div>
+          <div class="col">
+            <img src="assets/Penguins.jpg" alt="..." class="rounded img-fluid">
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <h6>Status</h6>
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-success btn-block" [ngClass]="associate.status ==='GREEN'?'active btn-success':''">
+                  <input type="radio" name="status" value="GREEN" autocomplete="off" [(ngModel)]="associate.status"> Green
+                </label>
+                <label class="btn btn-outline-danger btn-block" [ngClass]="associate.status ==='RED'?'active btn-danger':''">
+                  <input type="radio" name="status" value="RED" autocomplete="off" [(ngModel)]="associate.status"> Red
+                </label>
+                <label class="btn btn-outline-primary btn-block" [ngClass]="associate.status ==='BLUE'?'active btn-primary':''">
+                  <input type="radio" name="status" value="BLUE" autocomplete="off" [(ngModel)]="associate.status"> Blue
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <h6>Level</h6>
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-success btn-block" [ngClass]="associate.level ==='ONE'?'active btn-success':''">
+                  <input type="radio" name="level" value="ONE" autocomplete="off" [(ngModel)]="associate.level"> Level 1
+                </label>
+                <label class="btn btn-outline-danger btn-block" [ngClass]="associate.level ==='TWO'?'active btn-danger':''">
+                  <input type="radio" name="level" value="TWO" autocomplete="off" [(ngModel)]="associate.level"> Level 2
+                </label>
+                <label class="btn btn-outline-primary btn-block" [ngClass]="associate.level ==='THREE'?'active btn-primary':''">
+                  <input type="radio" name="level" value="THREE" autocomplete="off" [(ngModel)]="associate.level"> Level 3
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <textarea rows="8" class="form-control" placeholder="Remarks" name="remark" [(ngModel)]="associate.remark"></textarea>
+          </div>
+        </div>
+        <hr>
+        <h3>Skills</h3>
+        <div class="row">
+          <div class="form-group col-4" *ngFor="let skill of skills">
+            <div class="col-1">
+              <label for="skill-{{skill.id}}" class="col-sm-1">{{skill.name}}</label>
+            </div>
+            <div class="col-4">
+              <span>0</span>
+              <input type="range" min="0" max="20" value="5" class="slider" id="skill-{{skill.id}}">
+              <span>20</span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+   </div>
+</div>
