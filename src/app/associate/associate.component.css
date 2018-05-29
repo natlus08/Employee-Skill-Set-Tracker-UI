@@ -29,5 +29,5 @@
   cursor: pointer;
 }
 .floatRight{
-  float:right;
+  float:right !important;
 }

@@ -15,22 +15,18 @@ export class SkillService {
     return this.http.get<Skill[]>(Constants.SKILL_API_ENDPOINT+'skills', Constants.HTTP_OPTIONS);
   }
 
-  /*getAssociate(id:number):Observable<Associate>{
-    return this.http.get<Associate>(Constants.ASSOCIATE_API_ENDPOINT+'associate/'+id, Constants.HTTP_OPTIONS);
+  addSkill(skill:Skill):Observable<Skill>{
+    let body = JSON.stringify(skill);
+    return this.http.post<Skill>(Constants.SKILL_API_ENDPOINT+'skill', skill, Constants.HTTP_OPTIONS);
   }
 
-  addCategory(category:Category):Observable<Category>{
-    let body = JSON.stringify(category);
-    return this.http.post<Category>(Constants.API_ENDPOINT+'category', category, Constants.HTTP_OPTIONS);
+  deleteSkill(id:number):Observable<any>{
+    return this.http.delete(Constants.SKILL_API_ENDPOINT+'skill/'+id, Constants.HTTP_OPTIONS);
   }
 
-  editCategory(category:Category):Observable<Category>{
-    let body = JSON.stringify(category);
-    return this.http.put<Category>(Constants.API_ENDPOINT+'category', category, Constants.HTTP_OPTIONS);
+  editSkill(skill:Skill):Observable<Skill>{
+    let body = JSON.stringify(skill);
+    return this.http.put<Skill>(Constants.SKILL_API_ENDPOINT+'skill', skill, Constants.HTTP_OPTIONS);
   }
-
-  deleteAssociate(id:number):Observable<any>{
-    return this.http.delete(Constants.ASSOCIATE_API_ENDPOINT+'associate/'+id, Constants.HTTP_OPTIONS);
-  }*/
 
 }

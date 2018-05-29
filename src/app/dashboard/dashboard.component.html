@@ -65,16 +65,16 @@
             <th>E-mail</th>
             <th>Cell Phone</th>
             <th>Strong Skills</th>
-            <th></th>
+            <th><button class="btn btn-success" [routerLink] = "['/Add']">Add new Associate</button></th>
           </tr>
           <tr>
-            <th colspan="2"><button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button></th>
+            <th colspan="2"><button class="btn btn-primary btn-block" (click)="clearFilters()">Clear Filters</button></th>
             <th><input type="text" [(ngModel)]="searchName" name="searchName" placeholder="Search By Name"></th>
             <th><input type="text" [(ngModel)]="searchId" name="searchId" placeholder="Search By Id"></th>
             <th><input type="text" [(ngModel)]="searchEmail" name="searchEmail" placeholder="Search By E-mail"></th>
             <th><input type="text" [(ngModel)]="searchCell" name="searchCell" placeholder="Search By Cell"></th>
             <th><input type="text" [(ngModel)]="searchSkill" name="searchSkill" placeholder="Search By a skill"></th>
-            <th><button class="btn btn-success" [routerLink] = "['/Add']">Add new Associate</button></th>
+            <th><button class="btn btn-primary btn-block" [routerLink] = "['/Skill']">Manage Skills</button></th>
           </tr>
           </thead>
           <tbody>

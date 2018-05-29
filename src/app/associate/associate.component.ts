@@ -19,9 +19,10 @@ export class AssociateComponent implements OnInit {
   isEdit: boolean = false;
   isView: boolean = false;
   isAdd: boolean = false;
-  associate: Associate = new Associate(0,'','','',0,[],'','','','','',[]);
+  associate: Associate = new Associate(null,'','M','',null,[],'','','','','',[]);
   skills: Skill[] = [];
   associateSkills: AssociateSkill[] = [];
+  newskill: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private _associateService: AssociateService,
               private _skillService: SkillService) { }
@@ -68,6 +69,7 @@ export class AssociateComponent implements OnInit {
       }
     );
   }
+
   mapAssociateSkillLevel(skills: Skill[]): void {
     skills.forEach(skill => {
       var skillAdded = false;
@@ -79,8 +81,46 @@ export class AssociateComponent implements OnInit {
         }
       });
       if (!skillAdded) {
-        this.associateSkills.push(new AssociateSkill(0,0,skill));
+        this.associateSkills.push(new AssociateSkill(null,null,skill));
       }
     });
   }
+
+  addSkill(): void {
+    var skillExists = false;
+    this.skills.forEach(skill => {
+      if(skill.name.toLowerCase() == this.newskill.toLowerCase()){
+        skillExists = true;
+        return;
+      }
+    });
+    if(!skillExists){
+      let newSkillObj: Skill = new Skill(null,this.newskill);
+      this._skillService.addSkill(newSkillObj).subscribe((data) => {
+        this.newskill = '';
+        this.skills.push(data);
+        this.associateSkills.push(new AssociateSkill(null,null,data))
+      });
+    }
+  }
+
+  reset(): void {
+    this.associate = new Associate(null,'','M','',null,[],'','','','','',[]);
+    this.associateSkills.forEach(associateSkill => {
+      associateSkill.level = null;
+    });
+  }
+
+  addAssociate(): void {
+    this.associate.skills = [];
+    this.associateSkills.forEach(associateSkill => {
+      if (associateSkill.level && associateSkill.level > 0) {
+        this.associate.skills.push(associateSkill);
+      }
+    });
+    this._associateService.addAssociate(this.associate).subscribe(() => {
+      this.router.navigate(['/View']);
+    });
+  }
+
 }

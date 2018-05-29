@@ -16,4 +16,14 @@ export class CommonService {
     });
     return pos;
   }
+
+  getObjectById(id: number, array: any[]) : any {
+    var object = null;
+    array.forEach(function(data){
+      if(data.id === id){
+        object = data;
+      }
+    });
+    return object;
+  }
 }

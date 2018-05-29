@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="row">
+    <main class="col-md-12">
+      <h3 class="text-center">Add Skill</h3>
+      <hr>
+      <div class="row justify-content-md-center">
+        <div class="row col-10">
+          <label for="newskill" class="col-sm-2 col-form-label"><strong>Add Skill</strong></label>
+          <div class="col-sm-7">
+            <input type="text" name="newskill" placeholder="Enter Skill" [(ngModel)]="newskill" class="form-control" id="newskill" required>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-primary" (click)="add()" *ngIf="!isEditMode">Add</button>
+            <button class="btn btn-primary" (click)="update()" *ngIf="isEditMode">Update</button>
+            <button class="btn btn-primary" (click)="cancel()" *ngIf="isEditMode">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group row">
+        <div class="form-group col-4" *ngFor="let skill of skills | namefilter:newskill">
+          <div class="row col-sm-12">
+            <label for="newskill" class="col-sm-4 col-form-label"><strong>{{skill.name | uppercase}}</strong></label>
+            <div class="col-sm-2">
+              <button class="btn btn-warning" (click)="edit(skill.id)">Edit</button>
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-danger" (click)="delete(skill.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row floatRight">
+        <div>
+          <button class="btn btn-dark btn-lg" [routerLink] = "['/Dashboard']">Back</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

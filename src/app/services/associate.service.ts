@@ -19,6 +19,11 @@ export class AssociateService {
     return this.http.get<Associate>(Constants.ASSOCIATE_API_ENDPOINT+'associate/'+id, Constants.HTTP_OPTIONS);
   }
 
+  addAssociate(associate:Associate):Observable<Associate>{
+    let body = JSON.stringify(associate);
+    return this.http.post<Associate>(Constants.ASSOCIATE_API_ENDPOINT+'associate', associate, Constants.HTTP_OPTIONS);
+  }
+
   /*addCategory(category:Category):Observable<Category>{
     let body = JSON.stringify(category);
     return this.http.post<Category>(Constants.API_ENDPOINT+'category', category, Constants.HTTP_OPTIONS);

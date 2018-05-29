@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
 //import components
 import { AppComponent } from './app.component';
 import { AssociateComponent } from './associate/associate.component'
@@ -19,6 +20,7 @@ import { IdFilter } from './pipes/idfilter.pipe';
 import { EmailFilter } from './pipes/emailfilter.pipe';
 import { MobileFilter } from './pipes/mobilefilter.pipe';
 import { SkillFilter } from './pipes/skillfilter.pipe';
+import { AssociateSkillFilter } from './pipes/associateskillfilter.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { SkillFilter } from './pipes/skillfilter.pipe';
     IdFilter,
     EmailFilter,
     MobileFilter,
-    SkillFilter
+    SkillFilter,
+    AssociateSkillFilter
   ],
   imports: [
     BrowserModule,
