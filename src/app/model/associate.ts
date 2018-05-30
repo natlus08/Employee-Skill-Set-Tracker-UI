@@ -6,7 +6,7 @@ export class Associate {
     public name: string,
     public gender: string,
     public email: string,
-    public mobile: number,
+    public mobile: string,
     public image: string[],
     public status: string,
     public level: string,

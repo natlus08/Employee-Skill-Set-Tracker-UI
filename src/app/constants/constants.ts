@@ -11,4 +11,11 @@ export class Constants {
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
     })
   };
+  public static HTTP_OPTIONS_FILE = {
+    headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Accept, Origin, Authorization',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+    })
+  };
 }

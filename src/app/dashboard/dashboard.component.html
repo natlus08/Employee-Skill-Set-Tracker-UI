@@ -80,7 +80,11 @@
           <tbody>
           <tr *ngFor="let associate of associates | namefilter : searchName | idfilter : searchId | emailfilter : searchEmail
           | mobilefilter : searchCell | skillfilter : searchSkill">
-            <td><img src="assets/Penguins.jpg" class="card-img"></td>
+            <td>
+              <img [src]="'data:image/PNG;base64,' + associate.image" class="card-img" *ngIf="associate.image">
+              <img src="/assets/male.jpg" class="card-img" *ngIf="!associate.image && associate.gender === 'M'">
+              <img src="/assets/female.jpg" class="card-img" *ngIf="!associate.image && associate.gender === 'F'">
+            </td>
             <td><div [ngClass]="associate.status" class="status"></div></td>
             <td>{{associate.name}}</td>
             <td>{{associate.id}}</td>

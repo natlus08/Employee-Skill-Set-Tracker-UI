@@ -21,18 +21,16 @@ export class AssociateService {
 
   addAssociate(associate:Associate):Observable<Associate>{
     let body = JSON.stringify(associate);
-    return this.http.post<Associate>(Constants.ASSOCIATE_API_ENDPOINT+'associate', associate, Constants.HTTP_OPTIONS);
+    return this.http.post<Associate>(Constants.ASSOCIATE_API_ENDPOINT+'associate', body, Constants.HTTP_OPTIONS);
   }
 
-  /*addCategory(category:Category):Observable<Category>{
-    let body = JSON.stringify(category);
-    return this.http.post<Category>(Constants.API_ENDPOINT+'category', category, Constants.HTTP_OPTIONS);
+  addAvatar(avatar:File, id:number):Observable<Associate>{
+    if(avatar){
+      const formData: FormData = new FormData();
+      formData.append('image', avatar, avatar.name);
+      return this.http.post<Associate>(Constants.ASSOCIATE_API_ENDPOINT+'avatar/'+id, formData, Constants.HTTP_OPTIONS_FILE);
+    }
   }
-
-  editCategory(category:Category):Observable<Category>{
-    let body = JSON.stringify(category);
-    return this.http.put<Category>(Constants.API_ENDPOINT+'category', category, Constants.HTTP_OPTIONS);
-  }*/
 
   deleteAssociate(id:number):Observable<any>{
     return this.http.delete(Constants.ASSOCIATE_API_ENDPOINT+'associate/'+id, Constants.HTTP_OPTIONS);

@@ -1,87 +1,112 @@
 <div class="container-fluid">
   <div class="row">
     <main class="col-md-12">
-      <form>
+      <form #associateForm="ngForm">
         <h3 class="text-center">Skill Set Tracker -
           <span *ngIf="isAdd">Add new Associate Information</span>
           <span *ngIf="isView">Associate Information</span>
           <span *ngIf="isEdit">Edit Associate Information</span>
         </h3>
         <hr>
+        <div class="alert alert-danger" *ngIf="name.errors && (name.dirty || name.touched) ||
+          email.errors && (email.dirty || email.touched) ||
+          mobile.errors && (mobile.dirty || mobile.touched) ||
+          status.errors && (status.dirty || status.touched) ||
+          level.errors && (level.dirty || level.touched)">
+          <p *ngIf="name.errors && (name.dirty || name.touched) && name.errors.required">Name is required</p>
+          <p *ngIf="email.errors && (email.dirty || email.touched) && email.errors.required">Email is required</p>
+          <p *ngIf="mobile.errors && (mobile.dirty || mobile.touched) && mobile.errors.required">Mobile is required</p>
+          <p *ngIf="status.errors && (status.dirty || status.touched) && status.errors.required">Select a status</p>
+          <p *ngIf="level.errors && (level.dirty || level.touched) && level.errors.required">Select a level</p>
+          <p *ngIf="mobile.errors && (mobile.dirty || mobile.touched) && (mobile.errors.minlength)">Mobile must contain 10 digits</p>
+          <p *ngIf="email.errors && (email.dirty || email.touched) && email.errors.pattern">Enter a valid Email</p>
+        </div>
         <div class="row">
           <div class="col">
-            <div class="form-group">
+            <div class="form-group required">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <div class="input-group-text">Name</div>
+                    <div class="input-group-text">Name&nbsp;&nbsp;</div>
                   </div>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" [(ngModel)]="associate.name">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" [(ngModel)]="associate.name" required #name="ngModel">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group required">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text">Gender</div>
                 </div>
-                <select class="form-control" id="gender" name="gender" [(ngModel)]="associate.gender" required>
+                <select class="form-control" id="gender" name="gender" [(ngModel)]="associate.gender">
                   <option value="M">MALE</option>
                   <option value="F">FEMALE</option>
                 </select>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group required">
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <div class="input-group-text">E-Mail</div>
+                  <div class="input-group-text">E-Mail&nbsp;</div>
                 </div>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter E-mail" [(ngModel)]="associate.email">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter E-mail" [(ngModel)]="associate.email" pattern="[^ @]*@[^ @]*" required #email="ngModel">
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group required">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text">Mobile</div>
                 </div>
-                <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile" [(ngModel)]="associate.mobile">
+                <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile" [(ngModel)]="associate.mobile"  ng-minlength="10" required #mobile="ngModel">
               </div>
             </div>
           </div>
-          <div class="col">
-            <img src="assets/Penguins.jpg" alt="..." class="rounded img-fluid">
+          <div class="col text-center">
+            <div class="profile-header-container">
+              <div class="profile-header-img">
+                <img [src]="'data:image/PNG;base64,' + associate.image" class="img-circle" *ngIf="associate.image">
+                <img src="/assets/male.jpg" class="img-circle" *ngIf="!associate.image && associate.gender === 'M'">
+                <img src="/assets/female.jpg" class="img-circle" *ngIf="!associate.image && associate.gender === 'F'">
+                <!-- badge -->
+                <div class="rank-label-container">
+                  <div class="row">
+                    <input type="file" id="avatar" (change)="onFileChange($event)" class="label label-default rank-label">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col">
-            <div class="form-group">
+          <div class="col-2">
+            <div class="form-group required">
               <h6>Status</h6>
               <div class="btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-outline-success btn-block" [ngClass]="associate.status ==='GREEN'?'active btn-success':''">
-                  <input type="radio" name="status" value="GREEN" autocomplete="off" [(ngModel)]="associate.status"> Green
+                  <input type="radio" name="status" value="GREEN" autocomplete="off" [(ngModel)]="associate.status" required #status="ngModel"> Green
                 </label>
                 <label class="btn btn-outline-danger btn-block" [ngClass]="associate.status ==='RED'?'active btn-danger':''">
-                  <input type="radio" name="status" value="RED" autocomplete="off" [(ngModel)]="associate.status"> Red
+                  <input type="radio" name="status" value="RED" autocomplete="off" [(ngModel)]="associate.status" required #status="ngModel"> Red
                 </label>
                 <label class="btn btn-outline-primary btn-block" [ngClass]="associate.status ==='BLUE'?'active btn-primary':''">
-                  <input type="radio" name="status" value="BLUE" autocomplete="off" [(ngModel)]="associate.status"> Blue
+                  <input type="radio" name="status" value="BLUE" autocomplete="off" [(ngModel)]="associate.status" required #status="ngModel"> Blue
                 </label>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="form-group">
+          <div class="col-2">
+            <div class="form-group required">
               <h6>Level</h6>
               <div class="btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-outline-success btn-block" [ngClass]="associate.level ==='ONE'?'active btn-success':''">
-                  <input type="radio" name="level" value="ONE" autocomplete="off" [(ngModel)]="associate.level"> Level 1
+                  <input type="radio" name="level" value="ONE" autocomplete="off" [(ngModel)]="associate.level" required #level="ngModel"> Level 1
                 </label>
                 <label class="btn btn-outline-danger btn-block" [ngClass]="associate.level ==='TWO'?'active btn-danger':''">
-                  <input type="radio" name="level" value="TWO" autocomplete="off" [(ngModel)]="associate.level"> Level 2
+                  <input type="radio" name="level" value="TWO" autocomplete="off" [(ngModel)]="associate.level" required #level="ngModel"> Level 2
                 </label>
                 <label class="btn btn-outline-primary btn-block" [ngClass]="associate.level ==='THREE'?'active btn-primary':''">
-                  <input type="radio" name="level" value="THREE" autocomplete="off" [(ngModel)]="associate.level"> Level 3
+                  <input type="radio" name="level" value="THREE" autocomplete="off" [(ngModel)]="associate.level" required #level="ngModel"> Level 3
                 </label>
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col-2">
             <textarea rows="8" class="form-control" placeholder="Remarks" name="remark" [(ngModel)]="associate.remark"></textarea>
           </div>
         </div>
@@ -97,7 +122,7 @@
             <div class="row">
                 <label for="newskill" class="col-sm-2 col-form-label"><strong>Add Skill</strong></label>
                 <div class="col-sm-8">
-                  <input type="text" name="newskill" placeholder="Enter Skill" [(ngModel)]="newskill" class="form-control" id="newskill" required>
+                  <input type="text" name="newskill" placeholder="Enter Skill" [(ngModel)]="newskill" class="form-control" id="newskill">
                 </div>
                 <div class="col-sm-2">
                   <button class="btn btn-primary" (click)="addSkill()">Add</button>
@@ -109,8 +134,11 @@
           <div class="form-group col-4" *ngFor="let associateSkill of associateSkills | associateskillfilter : skillsearch | associateskillfilter : newskill">
             <div class="row">
               <label for="skill-{{associateSkill.skill.id}}" class="col-sm-3 col-form-label"><strong>{{associateSkill.skill.name | uppercase}}</strong></label>
-              <div class="col-sm-9">
-                <input type="number" min="0" max="20" name="skill-{{associateSkill.skill.id}}" [(ngModel)]="associateSkill.level" class="form-control" id="skill-{{associateSkill.skill.id}}">
+              <div class="col-sm-8">
+                <input type="range" min="0" max="20" step="1" name="skill-{{associateSkill.skill.id}}" [(ngModel)]="associateSkill.level" class="form-control" id="skill-{{associateSkill.skill.id}}">
+              </div>
+              <div class="col-sm-1 slider-value">
+                <strong>{{associateSkill.level}}</strong>
               </div>
             </div>
           </div>
@@ -137,8 +165,12 @@
         <hr>
         <div class="row floatRight">
           <div>
-            <button class="btn btn-success" *ngIf="!isView" (click)="addAssociate()">Save</button>
+            <button class="btn btn-success" *ngIf="!isView" (click)="saveAssociate()" [disabled]="associateForm.invalid">Save</button>
             <button class="btn btn-warning" *ngIf="isAdd" (click)="reset()">Reset</button>
+          </div>
+        </div>
+        <div class="row floatLeft">
+          <div>
             <button class="btn btn-danger" [routerLink] = "['/Dashboard']">Back</button>
           </div>
         </div>

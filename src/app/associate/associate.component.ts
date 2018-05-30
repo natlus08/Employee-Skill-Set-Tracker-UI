@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormsModule, FormGroup, FormControl } from '@angular/forms';
 
 import { AssociateService } from '../services/associate.service';
 import { SkillService } from '../services/skill.service';
@@ -19,10 +20,11 @@ export class AssociateComponent implements OnInit {
   isEdit: boolean = false;
   isView: boolean = false;
   isAdd: boolean = false;
-  associate: Associate = new Associate(null,'','M','',null,[],'','','','','',[]);
+  associate: Associate = new Associate(null,'','M','','',null,'','','','','',[]);
   skills: Skill[] = [];
   associateSkills: AssociateSkill[] = [];
   newskill: string = '';
+  avatar: any = null;
 
   constructor(private route: ActivatedRoute, private router: Router, private _associateService: AssociateService,
               private _skillService: SkillService) { }
@@ -105,22 +107,36 @@ export class AssociateComponent implements OnInit {
   }
 
   reset(): void {
-    this.associate = new Associate(null,'','M','',null,[],'','','','','',[]);
+    this.associate = new Associate(null,'','M','','',null,'','','','','',[]);
     this.associateSkills.forEach(associateSkill => {
       associateSkill.level = null;
     });
   }
 
-  addAssociate(): void {
+  saveAssociate(): void {
     this.associate.skills = [];
     this.associateSkills.forEach(associateSkill => {
       if (associateSkill.level && associateSkill.level > 0) {
         this.associate.skills.push(associateSkill);
       }
     });
-    this._associateService.addAssociate(this.associate).subscribe(() => {
-      this.router.navigate(['/View']);
+    this._associateService.addAssociate(this.associate).subscribe((data) => {
+      if(this.avatar){
+        this._associateService.addAvatar(this.avatar,data.id).subscribe((data) => {
+          this.router.navigate(['/View']);
+        });
+      }
+      else {
+        this.router.navigate(['/View']);
+      }
     });
+  }
+
+  onFileChange(event) {
+    let reader = new FileReader();
+    if(event.target.files && event.target.files.length > 0) {
+      this.avatar = event.target.files[0];
+    }
   }
 
 }
