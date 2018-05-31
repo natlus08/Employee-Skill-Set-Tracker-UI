@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -37,7 +36,6 @@ import { AssociateSkillFilter } from './pipes/associateskillfilter.pipe';
   ],
   imports: [
     BrowserModule,
-    NgbModule.forRoot(),
     FormsModule,
     HttpClientModule,
     routing
