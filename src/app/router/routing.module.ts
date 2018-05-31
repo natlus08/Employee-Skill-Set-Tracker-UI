@@ -6,7 +6,7 @@ import { AssociateComponent } from '../associate/associate.component'
 import { DashboardComponent } from '../dashboard/dashboard.component'
 import { SkillComponent } from '../skill/skill.component'
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: 'Dashboard', component: DashboardComponent },
   { path: 'Edit/:index', component: AssociateComponent },
   { path: 'View/:index', component: AssociateComponent },
