@@ -25,6 +25,7 @@ export class AssociateComponent implements OnInit {
   associateSkills: AssociateSkill[] = [];
   newskill: string = '';
   avatar: any = null;
+  skillsearch: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private _associateService: AssociateService,
               private _skillService: SkillService) { }
