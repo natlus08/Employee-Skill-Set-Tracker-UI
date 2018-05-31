@@ -5,24 +5,24 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 //import components
-import { AppComponent } from './app.component';
-import { AssociateComponent } from './associate/associate.component'
-import { DashboardComponent } from './dashboard/dashboard.component'
-import { SkillComponent } from './skill/skill.component'
-import { routing } from './router/routing.module';
+import { AppComponent } from '../app.component';
+import { AssociateComponent } from '../associate/associate.component'
+import { DashboardComponent } from '../dashboard/dashboard.component'
+import { SkillComponent } from '../skill/skill.component'
+import { routing } from '../router/routing.module';
 //import services
-import { AssociateService } from './services/associate.service'
-import { SkillService } from './services/skill.service'
-import { CommonService } from './services/common.service'
+import { AssociateService } from '../services/associate.service'
+import { SkillService } from '../services/skill.service'
+import { CommonService } from '../services/common.service'
 //import pipes
-import { NameFilter } from './pipes/namefilter.pipe';
-import { IdFilter } from './pipes/idfilter.pipe';
-import { EmailFilter } from './pipes/emailfilter.pipe';
-import { MobileFilter } from './pipes/mobilefilter.pipe';
-import { SkillFilter } from './pipes/skillfilter.pipe';
-import { AssociateSkillFilter } from './pipes/associateskillfilter.pipe';
+import { NameFilter } from '../pipes/namefilter.pipe';
+import { IdFilter } from '../pipes/idfilter.pipe';
+import { EmailFilter } from '../pipes/emailfilter.pipe';
+import { MobileFilter } from '../pipes/mobilefilter.pipe';
+import { SkillFilter } from '../pipes/skillfilter.pipe';
+import { AssociateSkillFilter } from '../pipes/associateskillfilter.pipe';
 
-describe('AppComponent', () => {
+describe('AssociateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -46,8 +46,8 @@ describe('AppComponent', () => {
       providers: [AssociateService, SkillService, CommonService, {provide: APP_BASE_HREF, useValue : '/' }]
     }).compileComponents();
   }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the associate component', async(() => {
+    const fixture = TestBed.createComponent(AssociateComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
