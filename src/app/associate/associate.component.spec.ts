@@ -1,9 +1,13 @@
-import { TestBed, async } from '@angular/core/testing';
-import { APP_BASE_HREF } from '@angular/common';
+import { TestBed, async, fakeAsync, tick, ComponentFixture, inject } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_BASE_HREF, Location } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Router, Routes } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 //import components
 import { AppComponent } from '../app.component';
 import { AssociateComponent } from '../associate/associate.component'
@@ -22,7 +26,12 @@ import { MobileFilter } from '../pipes/mobilefilter.pipe';
 import { SkillFilter } from '../pipes/skillfilter.pipe';
 import { AssociateSkillFilter } from '../pipes/associateskillfilter.pipe';
 
+import { Constants } from '../constants/constants';
+
 describe('AssociateComponent', () => {
+  let location: Location;
+  let router: Router;
+  let fixture: ComponentFixture<any>;   
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -41,25 +50,48 @@ describe('AssociateComponent', () => {
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        routing
+        routing,
+        HttpClientTestingModule
       ],
-      providers: [AssociateService, SkillService, CommonService, {provide: APP_BASE_HREF, useValue : '/' }]
-    }).compileComponents();
+      providers: [AssociateService, SkillService, CommonService,  {provide: APP_BASE_HREF, useValue : '/View' }]
+    }).compileComponents(); 
+    // get the router from the testing NgModule
+    router = TestBed.get(Router);
+    // get the location from the testing NgModule,
+    // which is a SpyLocation that comes from RouterTestingModule
+    location = TestBed.get(Location);
+    // compile the root component of the app
+    fixture = TestBed.createComponent(AssociateComponent);
+    router.navigateByUrl("/View");       
+  }));
+  afterEach(inject([HttpTestingController], (httpMock: HttpTestingController) => {
+    httpMock.verify();
+  }));
+  it('returns associate response', inject([HttpClient, HttpTestingController], (http: HttpClient, httpMock: HttpTestingController) => {
+    const mockResponse: any = require('../../assets/associate.json');
+    const associateService = TestBed.get(AssociateService);
+    associateService.getAssociate(1).subscribe(
+      data => {
+        expect(data.length).toBe(1);
+        expect(data[0].id).toEqual(1);
+      }
+    );
+    const req = httpMock.expectOne(Constants.ASSOCIATE_API_ENDPOINT+'associate/1');
+    expect(req.request.method).toEqual('GET');
+    req.flush(mockResponse);
+    httpMock.verify();
   }));
   it('should create the associate component', async(() => {
     const fixture = TestBed.createComponent(AssociateComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  /*it(`should have as title 'Employee Skillset Tracker'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Employee Skillset Tracker');
+  it('should have header', async(() => {
+    expect(fixture.debugElement.nativeElement.querySelector('h3').textContent).toContain('Skill Set Tracker -');    
   }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;    
-    expect(compiled.querySelector('h1').textContent).toContain('Employee Skill Set Tracker - Dashboard');
-  }));*/
 });
+
+function advance(f: ComponentFixture<any>) {
+  tick();
+  f.detectChanges();
+}

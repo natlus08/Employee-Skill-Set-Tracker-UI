@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "hameedu",
+        "gender": "M",
+        "email": "1@abc.com",
+        "mobile": "1234567890",
+        "image": null,
+        "status": "GREEN",
+        "level": "ONE",
+        "remark": "remark",
+        "strength": "strength",
+        "weakness": "weakness",
+        "skills": [
+            {
+                "level": 10,
+                "skill": {
+                    "id": 1,
+                    "name": "java"
+                }
+            },
+            {
+                "level": 20,
+                "skill": {
+                    "id": 2,
+                    "name": "angular"
+                }
+            },
+            {
+                "level": 13,
+                "skill": {
+                    "id": 3,
+                    "name": "spring"
+                }
+            }
+        ]
+    }
+]
